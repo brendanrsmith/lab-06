@@ -51,23 +51,14 @@ app.get('/location', (req, res) => {
 //      /weather
 app.get('/weather', (req, res) => {
 
-    // dummy weather data
-    const dummyWeatherData = [
-        {
-          "forecast": "Partly cloudy until afternoon.",
-          "time": "Mon Jan 01 2001"
-        },
-        {
-          "forecast": "Mostly cloudy in the morning.",
-          "time": "Tue Jan 02 2001"
-        },
-      ]
+    // get weather data from json file
+    const weatherData = require('./data/weather.json');
 
     // return new weather object 
     const arr = [];
-    dummyWeatherData.forEach(jsonObj => {
-        const weather = new Weather(jsonObj);
-        arr.push(weather);
+    weatherData.data.forEach(weatherObj => {
+        const newWeather = new Weather(weatherObj);
+        arr.push(newWeather);
     })
     res.send(arr);
 });
@@ -79,11 +70,11 @@ function Location(search_query, formatted_query, latitude, longitude) {
     this.formatted_query = formatted_query;
     this.longitude = longitude;
     this.latitude = latitude;
-}
+} 
 
 function Weather(jsonObj){
-    this.forecast = jsonObj.forecast;
-    this.time = jsonObj.time;
+    this.forecast = jsonObj.weather.description; //Check syntax here***
+    this.time = jsonObj.valid_date;
 }
 
 // ==== Start the server ====
