@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3111;
 
 // ==== Routes ====
 app.get('/', (req, res) => {
-    res.send('server is running!')
+    res.send(`<h1>This server is running on PORT ${PORT}</h1>`);
 });
 
 // ==== Helper functions ====
