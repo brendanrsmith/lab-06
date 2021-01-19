@@ -1,0 +1,25 @@
+{
+  "name": "lab-06",
+  "version": "1.0.0",
+  "description": "code 301 lab-06 server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brendigler/lab-06.git"
+  },
+  "author": "Brendan Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brendigler/lab-06/issues"
+  },
+  "homepage": "https://github.com/brendigler/lab-06#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
