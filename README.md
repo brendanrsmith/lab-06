@@ -18,7 +18,7 @@ Requires Node.js, cors, dotenv, and express.
 ## Credits and Collaborations
 CodeFellows' [City Explorer](https://codefellows.github.io/code-301-guide/curriculum/city-explorer-app/front-end/) project front-end was crucial to this project.
 
-
+## Lab-06
 Number and name of feature: Repository setup
 
     Estimate of time needed to complete: 45m
@@ -58,3 +58,35 @@ Number and name of feature: Errors
     Finish time: 6:17
 
     Actual time needed to complete: 17m
+
+## Lab-07
+
+Number and name of feature: Code Review
+
+    Estimate of time needed to complete: 0:45
+
+    Start time: 3:00
+
+    Finish time: 3:45
+
+    Actual time needed to complete: 0:45
+
+Number and name of feature: Heroku Deployment
+
+    Estimate of time needed to complete: _____
+
+    Start time: _____
+
+    Finish time: _____
+
+    Actual time needed to complete: _____
+
+Number and name of feature: Feature Tasks
+
+    Estimate of time needed to complete: _____
+
+    Start time: _____
+
+    Finish time: _____
+
+    Actual time needed to complete: _____
