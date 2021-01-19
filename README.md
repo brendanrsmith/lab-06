@@ -1,4 +1,4 @@
-# lab-06 City Explorer Back-end
+# lab-06 -> 09 City Explorer Back-end
 
 **Author**: Brendan Smith
 **Version**: 1.0.0
