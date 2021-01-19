@@ -26,6 +26,11 @@ app.get('/', (req, res) => {
 //       /location
 app.get('/location', (req, res) => {
     
+    // check for bad query
+    if(! req.query.city){
+        res.status(500).send('Sorry, something went wrong');
+        return;
+    }
     // Normalize data with Location constructor
     const dataArrayFromJsonLocation = require('./data/location.json'); // Gets loc data from JSON location file
     const dataFromJsonLocation = dataArrayFromJsonLocation[0];

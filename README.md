@@ -1,42 +1,60 @@
-# lab-06
+# lab-06 City Explorer Back-end
 
 **Author**: Brendan Smith
 **Version**: 1.0.0
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+Provides back-end support for the Code Fellows City Explorer front-end. 
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+Requires Node.js, cors, dotenv, and express. 
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
-
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.
+01-18-21 6:23pm - Application has functioning /location and /weather paths, returning data from attached JSON files.
 
 ## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
--->
+CodeFellows' [City Explorer](https://codefellows.github.io/code-301-guide/curriculum/city-explorer-app/front-end/) project front-end was crucial to this project.
+
 
 Number and name of feature: Repository setup
 
-Estimate of time needed to complete: 45m
+    Estimate of time needed to complete: 45m
 
-Start time: 3:15
+    Start time: 3:15
 
-Finish time: 4:00
+    Finish time: 4:00
 
-Actual time needed to complete: 45m
+    Actual time needed to complete: 45m
 
-Number and name of feature: ________________________________
+Number and name of feature: Locations
 
-Estimate of time needed to complete: _____
+    Estimate of time needed to complete: 1hr
 
-Start time: _____
+    Start time: 4:00
 
-Finish time: _____
+    Finish time: 5:20
 
-Actual time needed to complete: _____
+    Actual time needed to complete: 1hr20m
+
+Number and name of feature: Weather
+
+    Estimate of time needed to complete: 1 hr
+
+    Start time: 5:20
+
+    Finish time: 6:00
+
+    Actual time needed to complete: 40m
+
+Number and name of feature: Errors
+
+    Estimate of time needed to complete: 20m
+
+    Start time: 6:00
+
+    Finish time: 6:17
+
+    Actual time needed to complete: 17m
