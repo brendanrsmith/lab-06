@@ -73,13 +73,13 @@ Number and name of feature: Code Review
 
 Number and name of feature: Heroku Deployment
 
-    Estimate of time needed to complete: _____
+    Estimate of time needed to complete: n/a (automatic heroku deployments were enabled yesterday)
 
-    Start time: _____
+    Start time: 2:45
 
-    Finish time: _____
+    Finish time: 2:45
 
-    Actual time needed to complete: _____
+    Actual time needed to complete: n/a
 
 Number and name of feature: Feature Tasks
 

@@ -55,12 +55,16 @@ app.get('/weather', (req, res) => {
     const weatherData = require('./data/weather.json');
 
     // return new weather object 
-    const arr = [];
-    weatherData.data.forEach(weatherObj => {
-        const newWeather = new Weather(weatherObj);
-        arr.push(newWeather);
-    })
-    res.send(arr);
+    const newWeather = weatherData.data.map(weatherObj => {
+        return new Weather(weatherObj);
+    });
+    // const arr = [];
+    // weatherData.data.forEach(weatherObj => {
+    //     const newWeather = new Weather(weatherObj);
+    //     arr.push(newWeather);
+    // })
+    res.send(newWeather);
+
 });
 
 // ==== Helper functions ====
