@@ -20,8 +20,32 @@ app.get('/', (req, res) => {
     res.send(`<h1>This server is running on PORT ${PORT}</h1>`);
 });
 
-// ==== Helper functions ====
+app.get('/location', (req, res) => {
+    
+    // Normalize data with Location constructor
+    const dataArrayFromJsonLocation = require('./data/location.json'); // Gets loc data from JSON location file
+    const dataFromJsonLocation = dataArrayFromJsonLocation[0];
 
+    // data from client 
+    console.log('req.query', req.query);
+    const searchedCity = req.query.city;
+
+    const searchedLocation = new Location(
+        searchedCity,
+        dataFromJsonLocation.display_name,
+        dataFromJsonLocation.lon,
+        dataFromJsonLocation.lat
+    );
+    res.send(searchedLocation);
+});
+
+// ==== Helper functions ====
+function Location(search_query, formatted_query, latitude, longitude) {
+    this.search_query = search_query;
+    this.formatted_query = formatted_query;
+    this.longitude = longitude;
+    this.latitude = latitude;
+}
 
 // ==== Start the server ====
 app.listen(PORT, () => console.log(`we are up on PORT ${PORT}`));
