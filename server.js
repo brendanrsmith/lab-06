@@ -15,11 +15,15 @@ app.use(cors()); // loads middleware cors
 // ==== other global variables ====
 const PORT = process.env.PORT || 3111;
 
+
 // ==== Routes ====
+
+//       /home
 app.get('/', (req, res) => {
     res.send(`<h1>This server is running on PORT ${PORT}</h1>`);
 });
 
+//       /location
 app.get('/location', (req, res) => {
     
     // Normalize data with Location constructor
@@ -39,12 +43,42 @@ app.get('/location', (req, res) => {
     res.send(searchedLocation);
 });
 
+//      /weather
+app.get('/weather', (req, res) => {
+
+    // dummy weather data
+    const dummyWeatherData = [
+        {
+          "forecast": "Partly cloudy until afternoon.",
+          "time": "Mon Jan 01 2001"
+        },
+        {
+          "forecast": "Mostly cloudy in the morning.",
+          "time": "Tue Jan 02 2001"
+        },
+      ]
+
+    // return new weather object 
+    const arr = [];
+    dummyWeatherData.forEach(jsonObj => {
+        const weather = new Weather(jsonObj);
+        arr.push(weather);
+    })
+    res.send(arr);
+});
+
 // ==== Helper functions ====
+
 function Location(search_query, formatted_query, latitude, longitude) {
     this.search_query = search_query;
     this.formatted_query = formatted_query;
     this.longitude = longitude;
     this.latitude = latitude;
+}
+
+function Weather(jsonObj){
+    this.forecast = jsonObj.forecast;
+    this.time = jsonObj.time;
 }
 
 // ==== Start the server ====
