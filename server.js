@@ -34,26 +34,25 @@ app.get('/location', (req, res) => {
         res.status(500).send('Sorry, something went wrong');
         return;
     }
-    // Normalize data with Location constructor
-        // const dataArrayFromJsonLocation = require('./data/location.json'); // Gets loc data from JSON location file
 
     const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${searchedCity}&format=json`;
     superagent.get(url)
         .then(result => {
 
-            const dataFromJsonLocation = result.body[0]; // 
-
-            // data from client 
-            console.log('req.query', req.query);
-            console.log(result.body);
+            // pull data from returned json object
+            const dataFromJsonLocation = result.body[0]; // same as lab-06, replaced with result.body[0] from superagent request
+            
+            // Normalize data with Location constructor
             const searchedLocation = new Location(
                 searchedCity,
                 dataFromJsonLocation.display_name,
                 dataFromJsonLocation.lon,
                 dataFromJsonLocation.lat
             );
+            // send location object to client
             res.send(searchedLocation);
         })
+        // error handling
         .catch(error => {
             res.status(500).send('LocationIQ Failed');
             console.log(error.message);
@@ -64,19 +63,29 @@ app.get('/location', (req, res) => {
 //      /weather
 app.get('/weather', (req, res) => {
 
-    // get weather data from json file
-    const weatherData = require('./data/weather.json');
+    const key = process.env.WEATHER_API_KEY;
+    // lat/long coming out transposed from front-end???
+    const longitude = req.query.latitude;
+    const latitude = req.query.longitude;
 
-    // return new weather object 
-    const newWeather = weatherData.data.map(weatherObj => {
-        return new Weather(weatherObj);
-    });
-    // const arr = [];
-    // weatherData.data.forEach(weatherObj => {
-    //     const newWeather = new Weather(weatherObj);
-    //     arr.push(newWeather);
-    // })
-    res.send(newWeather);
+    // get weather data from api
+    const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${key}`;
+    superagent.get(url)
+        .then(result => {
+            console.log(result.body.data);
+            // create new weather object 
+            const newWeather = result.body.data.map(weatherObj => {
+                return new Weather(weatherObj);
+            });
+            // return new weather object 
+            res.send(newWeather);
+        })
+        // error handling
+        .catch(error => {
+            res.status(500).send('weatherbit Failed');
+            console.log(error.message);
+        });
+    
 
 });
 

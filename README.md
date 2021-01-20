@@ -97,9 +97,9 @@ Number and name of feature: locations
 
     Start time: 4:30
 
-    Finish time: 
+    Finish time: 4:59
 
-    Actual time needed to complete: 
+    Actual time needed to complete: 0:30
 
 Number and name of feature: 
 
