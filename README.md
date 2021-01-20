@@ -14,12 +14,14 @@ Requires Node.js, cors, dotenv, and express.
 
 ## Change Log
 01-18-21 6:23pm - Application has functioning /location and /weather paths, returning data from attached JSON files.
+01-19-21 4:59pm - Added locationIQ api integration to search location data, Weatherbit api for weather data, and NPS parks  api for local park data. 
+
 
 ## Credits and Collaborations
 CodeFellows' [City Explorer](https://codefellows.github.io/code-301-guide/curriculum/city-explorer-app/front-end/) project front-end was crucial to this project.
 
 ## Lab-06
-Number and name of feature: Repository setup
+Number and name of feature: *Repository setup*
 
     Estimate of time needed to complete: 45m
 
@@ -29,7 +31,7 @@ Number and name of feature: Repository setup
 
     Actual time needed to complete: 45m
 
-Number and name of feature: Locations
+Number and name of feature: *Locations*
 
     Estimate of time needed to complete: 1hr
 
@@ -39,7 +41,7 @@ Number and name of feature: Locations
 
     Actual time needed to complete: 1hr20m
 
-Number and name of feature: Weather
+Number and name of feature: *Weather*
 
     Estimate of time needed to complete: 1 hr
 
@@ -49,7 +51,7 @@ Number and name of feature: Weather
 
     Actual time needed to complete: 40m
 
-Number and name of feature: Errors
+Number and name of feature: *Errors*
 
     Estimate of time needed to complete: 20m
 
@@ -60,8 +62,7 @@ Number and name of feature: Errors
     Actual time needed to complete: 17m
 
 ## Lab-07
-
-Number and name of feature: Code Review
+Number and name of feature: *Code Review*
 
     Estimate of time needed to complete: 0:45
 
@@ -71,7 +72,7 @@ Number and name of feature: Code Review
 
     Actual time needed to complete: 0:45
 
-Number and name of feature: Heroku Deployment
+Number and name of feature: *Heroku Deployment*
 
     Estimate of time needed to complete: n/a (automatic heroku deployments were enabled yesterday)
 
@@ -81,7 +82,7 @@ Number and name of feature: Heroku Deployment
 
     Actual time needed to complete: n/a
 
-Number and name of feature: getWeather callback to .map
+Number and name of feature: *getWeather callback to .map*
 
     Estimate of time needed to complete: 0:15
 
@@ -91,7 +92,7 @@ Number and name of feature: getWeather callback to .map
 
     Actual time needed to complete: 0:10
 
-Number and name of feature: locations
+Number and name of feature: *Locations*
 
     Estimate of time needed to complete: 0:30
 
@@ -101,12 +102,22 @@ Number and name of feature: locations
 
     Actual time needed to complete: 0:30
 
-Number and name of feature: 
+Number and name of feature: *Weather*
 
-    Estimate of time needed to complete: 
+    Estimate of time needed to complete: 0:30
 
-    Start time: 
+    Start time: 5:00
 
-    Finish time: 
+    Finish time: 5:43
 
-    Actual time needed to complete: 
+    Actual time needed to complete: 0:43
+
+Number and name of feature: *Parks*
+
+    Estimate of time needed to complete: 1:00
+
+    Start time: 5:44
+
+    Finish time: 7:05
+
+    Actual time needed to complete: 1:20

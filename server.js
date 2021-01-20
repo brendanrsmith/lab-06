@@ -54,10 +54,9 @@ app.get('/location', (req, res) => {
         })
         // error handling
         .catch(error => {
-            res.status(500).send('LocationIQ Failed');
+            res.status(500).send('LocationIQ api Failed');
             console.log(error.message);
         });
-
 });
 
 //      /weather
@@ -72,7 +71,6 @@ app.get('/weather', (req, res) => {
     const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${key}`;
     superagent.get(url)
         .then(result => {
-            console.log(result.body.data);
             // create new weather object 
             const newWeather = result.body.data.map(weatherObj => {
                 return new Weather(weatherObj);
@@ -82,12 +80,34 @@ app.get('/weather', (req, res) => {
         })
         // error handling
         .catch(error => {
-            res.status(500).send('weatherbit Failed');
+            res.status(500).send('weatherbit api Failed');
             console.log(error.message);
         });
-    
-
 });
+
+//      /parks
+app.get('/parks', (req, res) => {
+
+    const key = process.env.PARKS_API_KEY;
+    const city = req.query.search_query;
+
+    // get parks data from api
+    const url = `https://developer.nps.gov/api/v1/parks?q=${city}&api_key=${key}`;
+    superagent.get(url)
+        .then(result => {
+            // create new parks object
+            const newPark = result.body.data.map(parkObj => {
+                return new Park(parkObj);
+            }) ;
+            // send new park object
+            res.send(newPark);
+        })
+        // error handling
+        .catch(error => {
+            res.status(500).send('Parks api Failed');
+            console.log(error.message);
+        });        
+})
 
 // ==== Helper functions ====
 
@@ -99,8 +119,16 @@ function Location(search_query, formatted_query, latitude, longitude) {
 } 
 
 function Weather(jsonObj){
-    this.forecast = jsonObj.weather.description; //Check syntax here***
-    this.time = jsonObj.valid_date;
+    this.forecast = jsonObj.weather.description;
+    this.time = jsonObj.ob_time;
+}
+
+function Park(parkObj){
+    this.park_url = parkObj.url;
+    this.name = parkObj.fullName;
+    this.address = `${parkObj.addresses[0].line1} ${parkObj.addresses[0].city}, ${parkObj.addresses[0].stateCode} ${parkObj.addresses[0].postalCode}`;
+    this.fee = '$' + parkObj.entranceFees[0].cost;
+    this.description = parkObj.description;
 }
 
 // ==== Start the server ====
