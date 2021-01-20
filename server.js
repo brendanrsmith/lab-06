@@ -3,7 +3,7 @@
 // ==== packages ====
 const express = require('express'); // implies express has been downloaded 
 const cors = require('cors'); //Cross origin Resource Sharing (this week only)
-const { response } = require('express');
+const superagent = require('superagent'); // Implies superagent has been installed
 require('dotenv').config(); // runs once and loads all the environment variables if they were declared in a file
 
 
@@ -26,26 +26,39 @@ app.get('/', (req, res) => {
 //       /location
 app.get('/location', (req, res) => {
     
+    const key = process.env.GEOCODE_API_KEY;
+    const searchedCity = req.query.city;
+
     // check for bad query
     if(! req.query.city){
         res.status(500).send('Sorry, something went wrong');
         return;
     }
     // Normalize data with Location constructor
-    const dataArrayFromJsonLocation = require('./data/location.json'); // Gets loc data from JSON location file
-    const dataFromJsonLocation = dataArrayFromJsonLocation[0];
+        // const dataArrayFromJsonLocation = require('./data/location.json'); // Gets loc data from JSON location file
 
-    // data from client 
-    console.log('req.query', req.query);
-    const searchedCity = req.query.city;
+    const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${searchedCity}&format=json`;
+    superagent.get(url)
+        .then(result => {
 
-    const searchedLocation = new Location(
-        searchedCity,
-        dataFromJsonLocation.display_name,
-        dataFromJsonLocation.lon,
-        dataFromJsonLocation.lat
-    );
-    res.send(searchedLocation);
+            const dataFromJsonLocation = result.body[0]; // 
+
+            // data from client 
+            console.log('req.query', req.query);
+            console.log(result.body);
+            const searchedLocation = new Location(
+                searchedCity,
+                dataFromJsonLocation.display_name,
+                dataFromJsonLocation.lon,
+                dataFromJsonLocation.lat
+            );
+            res.send(searchedLocation);
+        })
+        .catch(error => {
+            res.status(500).send('LocationIQ Failed');
+            console.log(error.message);
+        });
+
 });
 
 //      /weather

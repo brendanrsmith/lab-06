@@ -81,12 +81,32 @@ Number and name of feature: Heroku Deployment
 
     Actual time needed to complete: n/a
 
-Number and name of feature: Feature Tasks
+Number and name of feature: getWeather callback to .map
 
-    Estimate of time needed to complete: _____
+    Estimate of time needed to complete: 0:15
 
-    Start time: _____
+    Start time: 3:35
 
-    Finish time: _____
+    Finish time: 3:45
 
-    Actual time needed to complete: _____
+    Actual time needed to complete: 0:10
+
+Number and name of feature: locations
+
+    Estimate of time needed to complete: 0:30
+
+    Start time: 4:30
+
+    Finish time: 
+
+    Actual time needed to complete: 
+
+Number and name of feature: 
+
+    Estimate of time needed to complete: 
+
+    Start time: 
+
+    Finish time: 
+
+    Actual time needed to complete: 
