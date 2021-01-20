@@ -68,7 +68,8 @@ app.get('/weather', (req, res) => {
     const latitude = req.query.longitude;
 
     // get weather data from api
-    const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${key}`;
+    // const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${key}`;
+    const url = `https://api.weatherbit.io/v2.0/forecast/hourly?lat=${latitude}&lon=${longitude}&hours=24&key=${key}&units=I`;
     superagent.get(url)
         .then(result => {
             // create new weather object 
@@ -119,8 +120,8 @@ function Location(search_query, formatted_query, latitude, longitude) {
 } 
 
 function Weather(jsonObj){
-    this.forecast = jsonObj.weather.description;
-    this.time = jsonObj.ob_time;
+    this.forecast = `${jsonObj.weather.description} and ${jsonObj.temp}ºF with winds of ${jsonObj.wind_spd} mph`;
+    this.time = jsonObj.datetime;
 }
 
 function Park(parkObj){

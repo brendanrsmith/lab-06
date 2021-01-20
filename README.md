@@ -19,6 +19,7 @@ Requires Node.js, cors, dotenv, and express.
 
 ## Credits and Collaborations
 CodeFellows' [City Explorer](https://codefellows.github.io/code-301-guide/curriculum/city-explorer-app/front-end/) project front-end was crucial to this project.
+Thanks to TA Chance for his assistance.
 
 ## Lab-06
 Number and name of feature: *Repository setup*
