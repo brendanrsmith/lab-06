@@ -122,3 +122,35 @@ Number and name of feature: *Parks*
     Finish time: 7:05
 
     Actual time needed to complete: 1:20
+
+## Lab-08
+
+Number and name of feature: Database
+
+    Estimate of time needed to complete: 0:30
+
+    Start time: 4:20
+
+    Finish time: 5:09
+
+    Actual time needed to complete: 0:51
+
+Number and name of feature: Server
+
+    Estimate of time needed to complete: 0:45
+
+    Start time: 5:15
+
+    Finish time: 6:25
+
+    Actual time needed to complete: 0:50
+
+Number and name of feature: Heroku
+
+    Estimate of time needed to complete: 1:00
+
+    Start time: 6:30
+
+    Finish time: _____
+
+    Actual time needed to complete: _____
