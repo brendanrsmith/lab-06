@@ -5,6 +5,7 @@ const express = require('express'); // implies express has been downloaded
 const cors = require('cors'); //Cross origin Resource Sharing (this week only)
 const superagent = require('superagent'); // Implies superagent has been installed
 require('dotenv').config(); // runs once and loads all the environment variables if they were declared in a file
+const pg = require('pg');
 
 
 // ==== setup the application ====
@@ -14,7 +15,9 @@ app.use(cors()); // loads middleware cors
 
 // ==== other global variables ====
 const PORT = process.env.PORT || 3111;
-
+const DATABASE_URL = process.env.DATABASE_URL; // postgre url
+const client = new pg.Client(DATABASE_URL); 
+client.on('error', (error) => console.log(error));
 
 // ==== Routes ====
 
@@ -133,4 +136,7 @@ function Park(parkObj){
 }
 
 // ==== Start the server ====
-app.listen(PORT, () => console.log(`we are up on PORT ${PORT}`));
+client.connect()
+.then ( () => {
+    app.listen(PORT, () => console.log(`we are up on PORT ${PORT}`)); // Starts up server
+}); // Starts connection to postgres 
