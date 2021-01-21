@@ -15,6 +15,7 @@ Requires Node.js, cors, dotenv, and express.
 ## Change Log
 01-18-21 6:23pm - Application has functioning /location and /weather paths, returning data from attached JSON files.
 01-19-21 4:59pm - Added locationIQ api integration to search location data, Weatherbit api for weather data, and NPS parks  api for local park data. 
+01-20-21 7:06pm - Added postgresql database storage for location data. 
 
 
 ## Credits and Collaborations
@@ -151,6 +152,6 @@ Number and name of feature: Heroku
 
     Start time: 6:30
 
-    Finish time: _____
+    Finish time: 7:06
 
-    Actual time needed to complete: _____
+    Actual time needed to complete: 0:36

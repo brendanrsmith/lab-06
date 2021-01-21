@@ -98,7 +98,7 @@ app.get('/weather', (req, res) => {
     const longitude = req.query.longitude;
 
     // get weather data from api
-    const url = `https://api.weatherbit.io/v2.0/forecast/hourly?lat=${latitude}&lon=${longitude}&hours=24&key=${key}&units=I`;
+    const url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&days=8&key=${key}&units=I`;
     superagent.get(url)
         .then(result => {
             // create new weather object 
