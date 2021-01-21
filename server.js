@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 //       /location
 app.get('/location', (req, res) => {
     
-    const key = process.env.GEOCODE_API_KEY;
+    // User input
     const searchedCity = req.query.city;
 
     // check for bad query
@@ -37,29 +37,56 @@ app.get('/location', (req, res) => {
         res.status(500).send('Sorry, something went wrong');
         return;
     }
+    // dummy data to sql server:
 
-    const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${searchedCity}&format=json`;
-    superagent.get(url)
-        .then(result => {
+    // Query SQL db for searchedCity 
+    const sqlQuery = `SELECT * FROM location WHERE search_query=$1`;
+    const sqlArray = [searchedCity]; // searchedCity
+    
+    client.query(sqlQuery, sqlArray).then(result => {
 
-            // pull data from returned json object
-            const dataFromJsonLocation = result.body[0]; // same as lab-06, replaced with result.body[0] from superagent request
-            
-            // Normalize data with Location constructor
-            const searchedLocation = new Location(
-                searchedCity,
-                dataFromJsonLocation.display_name,
-                dataFromJsonLocation.lon,
-                dataFromJsonLocation.lat
-            );
-            // send location object to client
-            res.send(searchedLocation);
-        })
-        // error handling
-        .catch(error => {
-            res.status(500).send('LocationIQ api Failed');
-            console.log(error.message);
-        });
+        // If searchedCity already in db, return that entry
+        if (result.rows.length >= 1) {
+            res.send(result.rows[0]);
+            console.log(`found: ${searchedCity}`);
+
+        //  Else, run api request and add new city data to sql database, then return that data to client
+        } else {
+            console.log(`${searchedCity} not found`);
+
+            // query API for searchedCity location data
+            const key = process.env.GEOCODE_API_KEY;
+            const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${searchedCity}&format=json`;
+            superagent.get(url)
+                .then(result => {
+        
+                    // pull data from returned json object
+                    const dataFromJsonLocation = result.body[0]; // same as lab-06, replaced with result.body[0] from superagent request
+                    
+                    // Normalize data with Location constructor
+                    const searchedLocation = new Location(
+                        searchedCity,
+                        dataFromJsonLocation.display_name,
+                        dataFromJsonLocation.lat,
+                        dataFromJsonLocation.lon
+                    );
+                    // Add new searchedLocation to SQL locations db
+                    const newLocationQuery = `INSERT INTO location (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4)`;
+                    const newLocationArray = [searchedLocation.search_query, searchedLocation.formatted_query, searchedLocation.latitude, searchedLocation.longitude];
+                    client.query(newLocationQuery, newLocationArray);
+                    console.log(`added city ${searchedCity}`);
+                
+                    // send location object to client
+                    res.send(searchedLocation);
+                })
+                // error handling
+                .catch(error => {
+                    res.status(500).send('LocationIQ api Failed');
+                    console.log(error.message);
+                });
+        }
+    });
+
 });
 
 //      /weather
@@ -67,11 +94,10 @@ app.get('/weather', (req, res) => {
 
     const key = process.env.WEATHER_API_KEY;
     // lat/long coming out transposed from front-end???
-    const longitude = req.query.latitude;
-    const latitude = req.query.longitude;
+    const latitude = req.query.latitude;
+    const longitude = req.query.longitude;
 
     // get weather data from api
-    // const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${key}`;
     const url = `https://api.weatherbit.io/v2.0/forecast/hourly?lat=${latitude}&lon=${longitude}&hours=24&key=${key}&units=I`;
     superagent.get(url)
         .then(result => {
@@ -118,8 +144,8 @@ app.get('/parks', (req, res) => {
 function Location(search_query, formatted_query, latitude, longitude) {
     this.search_query = search_query;
     this.formatted_query = formatted_query;
-    this.longitude = longitude;
     this.latitude = latitude;
+    this.longitude = longitude;
 } 
 
 function Weather(jsonObj){
@@ -136,7 +162,7 @@ function Park(parkObj){
 }
 
 // ==== Start the server ====
-client.connect()
+client.connect() // Starts connection to postgres 
 .then ( () => {
     app.listen(PORT, () => console.log(`we are up on PORT ${PORT}`)); // Starts up server
-}); // Starts connection to postgres 
+});

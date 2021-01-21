@@ -135,21 +135,21 @@ Number and name of feature: Database
 
     Actual time needed to complete: 0:51
 
-Number and name of feature: ________________________________
+Number and name of feature: Server
 
-    Estimate of time needed to complete: _____
+    Estimate of time needed to complete: 0:45
 
-    Start time: _____
+    Start time: 5:15
 
-    Finish time: _____
+    Finish time: 6:25
 
-    Actual time needed to complete: _____
+    Actual time needed to complete: 0:50
 
-Number and name of feature: ________________________________
+Number and name of feature: Heroku
 
-    Estimate of time needed to complete: _____
+    Estimate of time needed to complete: 1:00
 
-    Start time: _____
+    Start time: 6:30
 
     Finish time: _____
 
