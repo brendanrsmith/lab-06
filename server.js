@@ -37,7 +37,6 @@ app.get('/location', (req, res) => {
         res.status(500).send('Sorry, something went wrong');
         return;
     }
-    // dummy data to sql server:
 
     // Query SQL db for searchedCity 
     const sqlQuery = `SELECT * FROM location WHERE search_query=$1`;
@@ -93,7 +92,6 @@ app.get('/location', (req, res) => {
 app.get('/weather', (req, res) => {
 
     const key = process.env.WEATHER_API_KEY;
-    // lat/long coming out transposed from front-end???
     const latitude = req.query.latitude;
     const longitude = req.query.longitude;
 
@@ -167,14 +165,15 @@ app.get('/movies', (req, res) => {
 //      /yelp
 app.get('/yelp', (req, res) => {
 
-    const yelpId = process.env.YELP_ID;
     const apiKey = process.env.YELP_API_KEY;
     const city = req.query.search_query;
-
+    const page = req.query.page;
+    const offset = (page - 1) * 5;
+    
     // Query yelp api with superagent
-    const url = `https://api.yelp.com/v3/businesses/search?location=${city}`;
+    const url = `https://api.yelp.com/v3/businesses/search?location=${city}&limit=5&offset=${offset}`;
     superagent.get(url)
-        .set('Authorization', `Bearer ${apiKey}`) // set user-key 
+        .set('Authorization', `Bearer ${apiKey}`) // set user-key for Yelp API
         .then(result => {
             // create new yelp object
             const newYelp = result.body.businesses.map(yelpObj => {

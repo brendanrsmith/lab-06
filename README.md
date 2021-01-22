@@ -7,7 +7,11 @@
 Provides back-end support for the Code Fellows City Explorer front-end. 
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+- Get API keys from: Yelp, NPS, Geocode, Weatherbit, and MovieDB
+- Get connection string for Postgres database-url
+- install node modules
+- set up a port 
+- Generate .env file with values for PORT, GEOCODE_API_KEY, WEATHER_API_KEY, PARKS_API_KEY, MOVIE_API_KEY, DATABASE_URL, YELP_API_KEY
 
 ## Architecture
 Requires Node.js, cors, dotenv, and express. 
@@ -164,26 +168,26 @@ Number and name of feature: Movies
 
     Start time: 4:40
 
-    Finish time: _____
+    Finish time: 5:45
 
-    Actual time needed to complete: _____
+    Actual time needed to complete: 1:05
 
 Number and name of feature: Yelp
 
-    Estimate of time needed to complete: _____
+    Estimate of time needed to complete: 1:00
 
-    Start time: _____
+    Start time: 6:30
 
-    Finish time: _____
+    Finish time: 7:42
 
-    Actual time needed to complete: _____
+    Actual time needed to complete: 1:42
 
 Number and name of feature: Pagination
 
-    Estimate of time needed to complete: _____
+    Estimate of time needed to complete: 0:30
 
-    Start time: _____
+    Start time: 7:43
 
-    Finish time: _____
+    Finish time: 7:53
 
-    Actual time needed to complete: _____
+    Actual time needed to complete: 0:10
