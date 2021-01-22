@@ -150,10 +150,12 @@ app.get('/movies', (req, res) => {
     superagent.get(url)
         .then(result => {
             // create new movie object
-            console.log(result.body);
-            // const newMovie = result.body 
-
+            console.log(result.body.results);
+            const newMovies = result.body.results.map(movieobj => {
+                return new Movie(movieobj);
+            });
             // send new movie object
+            res.send(newMovies);
         })
         // error handling
         .catch(error => {
@@ -182,6 +184,22 @@ function Park(parkObj){
     this.address = `${parkObj.addresses[0].line1} ${parkObj.addresses[0].city}, ${parkObj.addresses[0].stateCode} ${parkObj.addresses[0].postalCode}`;
     this.fee = '$' + parkObj.entranceFees[0].cost;
     this.description = parkObj.description;
+}
+{/* <script type="text/x-tmpl-mustache" id="movies-results-template">
+<li>
+  <p><span>{{ title }}</span> was relased on {{ released_on }}. Out of {{ total_votes }} total votes, {{title}} has an average vote of {{ average_votes }} and a popularity score of {{ popularity }}.</p>
+  <img src="{{ image_url }}">
+  <p>{{ overview }}</p>
+</li>
+</script> */}
+function Movie(movieobj) {
+    this.title = movieobj.title;
+    this.released_on = movieobj.release_date;
+    this.total_votes = movieobj.vote_count;
+    this.average_votes = movieobj.vote_average;
+    this.popularity = movieobj.popularity;
+    this.image_url = `https://image.tmdb.org/t/p/original` + movieobj.poster_path;
+    this.overview = movieobj.overview;
 }
 
 // ==== Start the server ====
