@@ -37,7 +37,6 @@ app.get('/location', (req, res) => {
         res.status(500).send('Sorry, something went wrong');
         return;
     }
-    // dummy data to sql server:
 
     // Query SQL db for searchedCity 
     const sqlQuery = `SELECT * FROM location WHERE search_query=$1`;
@@ -93,7 +92,6 @@ app.get('/location', (req, res) => {
 app.get('/weather', (req, res) => {
 
     const key = process.env.WEATHER_API_KEY;
-    // lat/long coming out transposed from front-end???
     const latitude = req.query.latitude;
     const longitude = req.query.longitude;
 
@@ -139,6 +137,58 @@ app.get('/parks', (req, res) => {
         });        
 })
 
+//      /movies
+app.get('/movies', (req, res) => {
+
+    const key = process.env.MOVIE_API_KEY;
+    const city = req.query.search_query;
+
+    // query movie db with superagent
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${city}&page=1&include_adult=false`;
+    superagent.get(url)
+        .then(result => {
+            // create new movie object
+            // console.log(result.body.results);
+            const newMovies = result.body.results.map(movieobj => {
+                return new Movie(movieobj);
+            });
+            // send new movie object
+            res.send(newMovies);
+        })
+        // error handling
+        .catch(error => {
+            res.status(500).send('Movies api Failed');
+            console.log(error.message);
+        });                
+})
+
+//      /yelp
+app.get('/yelp', (req, res) => {
+
+    const apiKey = process.env.YELP_API_KEY;
+    const city = req.query.search_query;
+    const page = req.query.page;
+    const offset = (page - 1) * 5;
+    
+    // Query yelp api with superagent
+    const url = `https://api.yelp.com/v3/businesses/search?location=${city}&limit=5&offset=${offset}`;
+    superagent.get(url)
+        .set('Authorization', `Bearer ${apiKey}`) // set user-key for Yelp API
+        .then(result => {
+            // create new yelp object
+            const newYelp = result.body.businesses.map(yelpObj => {
+                return new Yelp(yelpObj);
+            })
+            // send new yelp object
+            res.send(newYelp);
+        })
+        // error handling
+        .catch(error => {
+            res.status(500).send('Yelp api Failed');
+            console.log(error.message);
+        }); 
+})
+
 // ==== Helper functions ====
 
 function Location(search_query, formatted_query, latitude, longitude) {
@@ -159,6 +209,24 @@ function Park(parkObj){
     this.address = `${parkObj.addresses[0].line1} ${parkObj.addresses[0].city}, ${parkObj.addresses[0].stateCode} ${parkObj.addresses[0].postalCode}`;
     this.fee = '$' + parkObj.entranceFees[0].cost;
     this.description = parkObj.description;
+}
+
+function Movie(movieobj) {
+    this.title = movieobj.title;
+    this.released_on = movieobj.release_date;
+    this.total_votes = movieobj.vote_count;
+    this.average_votes = movieobj.vote_average;
+    this.popularity = movieobj.popularity;
+    this.image_url = `https://image.tmdb.org/t/p/original` + movieobj.poster_path;
+    this.overview = movieobj.overview;
+}
+
+function Yelp(yelpobj) {
+    this.url = yelpobj.url;
+    this.name = yelpobj.name;
+    this.rating = yelpobj.rating;
+    this.price = yelpobj.price;
+    this.image_url = yelpobj.image_url;
 }
 
 // ==== Start the server ====
