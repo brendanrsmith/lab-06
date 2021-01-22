@@ -139,6 +139,29 @@ app.get('/parks', (req, res) => {
         });        
 })
 
+//      /movies
+app.get('/movies', (req, res) => {
+
+    const key = process.env.MOVIE_API_KEY;
+    const city = req.query.search_query;
+
+    // query movie db with superagent
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${city}&page=1&include_adult=false`;
+    superagent.get(url)
+        .then(result => {
+            // create new movie object
+            console.log(result.body);
+            // const newMovie = result.body 
+
+            // send new movie object
+        })
+        // error handling
+        .catch(error => {
+            res.status(500).send('Movies api Failed');
+            console.log(error.message);
+        });                
+})
+
 // ==== Helper functions ====
 
 function Location(search_query, formatted_query, latitude, longitude) {
