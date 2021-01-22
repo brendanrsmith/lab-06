@@ -150,7 +150,7 @@ app.get('/movies', (req, res) => {
     superagent.get(url)
         .then(result => {
             // create new movie object
-            console.log(result.body.results);
+            // console.log(result.body.results);
             const newMovies = result.body.results.map(movieobj => {
                 return new Movie(movieobj);
             });
@@ -162,6 +162,32 @@ app.get('/movies', (req, res) => {
             res.status(500).send('Movies api Failed');
             console.log(error.message);
         });                
+})
+
+//      /yelp
+app.get('/yelp', (req, res) => {
+
+    const yelpId = process.env.YELP_ID;
+    const apiKey = process.env.YELP_API_KEY;
+    const city = req.query.search_query;
+
+    // Query yelp api with superagent
+    const url = `https://api.yelp.com/v3/businesses/search?location=${city}`;
+    superagent.get(url)
+        .set('Authorization', `Bearer ${apiKey}`) // set user-key 
+        .then(result => {
+            // create new yelp object
+            const newYelp = result.body.businesses.map(yelpObj => {
+                return new Yelp(yelpObj);
+            })
+            // send new yelp object
+            res.send(newYelp);
+        })
+        // error handling
+        .catch(error => {
+            res.status(500).send('Yelp api Failed');
+            console.log(error.message);
+        }); 
 })
 
 // ==== Helper functions ====
@@ -185,13 +211,7 @@ function Park(parkObj){
     this.fee = '$' + parkObj.entranceFees[0].cost;
     this.description = parkObj.description;
 }
-{/* <script type="text/x-tmpl-mustache" id="movies-results-template">
-<li>
-  <p><span>{{ title }}</span> was relased on {{ released_on }}. Out of {{ total_votes }} total votes, {{title}} has an average vote of {{ average_votes }} and a popularity score of {{ popularity }}.</p>
-  <img src="{{ image_url }}">
-  <p>{{ overview }}</p>
-</li>
-</script> */}
+
 function Movie(movieobj) {
     this.title = movieobj.title;
     this.released_on = movieobj.release_date;
@@ -200,6 +220,14 @@ function Movie(movieobj) {
     this.popularity = movieobj.popularity;
     this.image_url = `https://image.tmdb.org/t/p/original` + movieobj.poster_path;
     this.overview = movieobj.overview;
+}
+
+function Yelp(yelpobj) {
+    this.url = yelpobj.url;
+    this.name = yelpobj.name;
+    this.rating = yelpobj.rating;
+    this.price = yelpobj.price;
+    this.image_url = yelpobj.image_url;
 }
 
 // ==== Start the server ====

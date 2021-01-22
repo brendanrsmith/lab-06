@@ -168,7 +168,7 @@ Number and name of feature: Movies
 
     Actual time needed to complete: _____
 
-Number and name of feature: ________________________________
+Number and name of feature: Yelp
 
     Estimate of time needed to complete: _____
 
@@ -178,7 +178,7 @@ Number and name of feature: ________________________________
 
     Actual time needed to complete: _____
 
-Number and name of feature: ________________________________
+Number and name of feature: Pagination
 
     Estimate of time needed to complete: _____
 
