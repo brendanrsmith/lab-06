@@ -7,11 +7,9 @@ const superagent = require('superagent'); // Implies superagent has been install
 require('dotenv').config(); // runs once and loads all the environment variables if they were declared in a file
 const pg = require('pg');
 
-
 // ==== setup the application ====
 const app = express(); //creates a server from express library
 app.use(cors()); // loads middleware cors
-
 
 // ==== other global variables ====
 const PORT = process.env.PORT || 3111;
@@ -20,14 +18,22 @@ const client = new pg.Client(DATABASE_URL);
 client.on('error', (error) => console.log(error));
 
 // ==== Routes ====
+app.get('/', getHome);
+app.get('/location', getLocation);
+app.get('/weather', goWeather);
+app.get('/parks', goPark);
+app.get('/movies', goMovie);
+app.get('/yelp', goYelp);
 
-//       /home
-app.get('/', (req, res) => {
+// ==== Route Callbacks ====
+
+// getHome
+function getHome(req, res){
     res.send(`<h1>This server is running on PORT ${PORT}</h1>`);
-});
+};
 
-//       /location
-app.get('/location', (req, res) => {
+// getLocation
+function getLocation(req, res){
     
     // User input
     const searchedCity = req.query.city;
@@ -86,10 +92,10 @@ app.get('/location', (req, res) => {
         }
     });
 
-});
+};
 
-//      /weather
-app.get('/weather', (req, res) => {
+// goWeather
+function goWeather(req, res){
 
     const key = process.env.WEATHER_API_KEY;
     const latitude = req.query.latitude;
@@ -111,16 +117,16 @@ app.get('/weather', (req, res) => {
             res.status(500).send('weatherbit api Failed');
             console.log(error.message);
         });
-});
+};
 
-//      /parks
-app.get('/parks', (req, res) => {
+// goPark
+function goPark(req, res){
 
     const key = process.env.PARKS_API_KEY;
     const city = req.query.search_query;
 
     // get parks data from api
-    const url = `https://developer.nps.gov/api/v1/parks?q=${city}&api_key=${key}`;
+    const url = `https://developer.nps.gov/api/v1/parks?q=${city}&api_key=${key}&limit=5`;
     superagent.get(url)
         .then(result => {
             // create new parks object
@@ -135,16 +141,16 @@ app.get('/parks', (req, res) => {
             res.status(500).send('Parks api Failed');
             console.log(error.message);
         });        
-})
+};
 
-//      /movies
-app.get('/movies', (req, res) => {
+// goMovie
+function goMovie(req, res){
 
     const key = process.env.MOVIE_API_KEY;
     const city = req.query.search_query;
 
     // query movie db with superagent
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${city}&page=1&include_adult=false`;
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${city}&page=1&include_adult=false&limit=1`;
     superagent.get(url)
         .then(result => {
             // create new movie object
@@ -160,10 +166,10 @@ app.get('/movies', (req, res) => {
             res.status(500).send('Movies api Failed');
             console.log(error.message);
         });                
-})
+};
 
-//      /yelp
-app.get('/yelp', (req, res) => {
+// goYelp
+function goYelp(req, res){
 
     const apiKey = process.env.YELP_API_KEY;
     const city = req.query.search_query;
@@ -187,7 +193,7 @@ app.get('/yelp', (req, res) => {
             res.status(500).send('Yelp api Failed');
             console.log(error.message);
         }); 
-})
+};
 
 // ==== Helper functions ====
 
